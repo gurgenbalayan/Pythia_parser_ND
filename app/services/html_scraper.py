@@ -32,7 +32,7 @@ async def fetch_company_details(url: str) -> dict:
                     record_num, id, name = result["record_num"], result["id"], result["name"]
         else:
             logger.error(f"Error fetching data for query '{url}'")
-            return []
+            return {}
         new_url = re.sub(r'(?<=business/)\d+(?=/)', id, url)
         headers_details = {
             'Authorization': 'undefined'
@@ -44,7 +44,7 @@ async def fetch_company_details(url: str) -> dict:
                 return await parse_html_details(data, record_num, id, name)
     except Exception as e:
         logger.error(f"Error fetching data for query '{url}': {e}")
-        return []
+        return {}
 async def fetch_company_data(query: str) -> list[dict]:
     url = "https://firststop.sos.nd.gov/api/Records/businesssearch"
 
